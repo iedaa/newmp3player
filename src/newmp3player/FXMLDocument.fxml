@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="newmp3player.FXMLDocumentController">
+   <children>
+      <ImageView fitHeight="428.0" fitWidth="630.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@background.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="14.0" layoutY="295.0" onDragDone="#dragSong" onDragDropped="#dropSong" onDragOver="#dragSong" onMouseDragReleased="#dropSong" prefHeight="128.0" prefWidth="131.0" text="Arraste suas músicas para cá" textAlignment="CENTER" underline="true" wrapText="true" />
+      <Label contentDisplay="TOP" layoutX="346.0" layoutY="76.0" prefHeight="25.0" prefWidth="274.0" text="Tocando Agora" textFill="WHITE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label blendMode="SRC_ATOP" contentDisplay="TOP" layoutX="346.0" layoutY="106.0" prefHeight="59.0" prefWidth="170.0" text="Nenhuma Música..." textFill="WHITE" wrapText="true">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Circle fx:id="songCircle" disable="true" fill="#1db954" layoutX="273.0" layoutY="132.0" radius="64.0" stroke="BLACK" strokeType="INSIDE" />
+      <ProgressBar fx:id="progressBar" layoutX="163.0" layoutY="368.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="6.0" prefWidth="467.0" progress="0.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ProgressBar>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="369.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/play.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="332.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/skip2.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="404.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/skip.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="436.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/repeat.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="300.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/shuffle.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+   </children>
+   <stylesheets>
+      <URL value="@demo.css" />
+   </stylesheets>
+</AnchorPane>
