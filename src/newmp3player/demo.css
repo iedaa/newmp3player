@@ -11,3 +11,13 @@
    -fx-background-insets: 0, 1;
 
 }
+
+.slider > .track {
+    -fx-background-color: #1db954;
+    -fx-padding: 1;
+}
+
+.slider > .thumb {
+    -fx-background-color: #1db954;
+    
+}

@@ -4,6 +4,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -34,14 +35,6 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ProgressBar>
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="369.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../resources/play.png" />
-         </image>
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </ImageView>
       <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="332.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/skip2.png" />
@@ -58,7 +51,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="436.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="repeat" fitHeight="32.0" fitWidth="32.0" layoutX="436.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/repeat.png" />
          </image>
@@ -74,6 +67,15 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
+      <ImageView fx:id="playPause" fitHeight="32.0" fitWidth="32.0" layoutX="369.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/play.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Slider layoutX="468.0" layoutY="397.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" value="75.0" />
    </children>
    <stylesheets>
       <URL value="@demo.css" />

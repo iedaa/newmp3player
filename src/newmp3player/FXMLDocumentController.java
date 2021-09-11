@@ -26,6 +26,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
@@ -56,6 +57,12 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     public ProgressBar progressBar;
+    
+    @FXML
+    public ImageView playPause;
+    
+    @FXML
+    public ImageView repeat;
     
     
     //Você vai provavelmente querer remover isso aqui.
@@ -113,60 +120,18 @@ public class FXMLDocumentController implements Initializable {
         if(db.hasFiles()) {
             
             File file = db.getFiles().iterator().next();
-       
+            
             musicPlayer.setMusica(new Media(file.toURI().toString()));
-
+            
             musicPlayer.trocarMusica();
+            
+            playPause.setImage(new Image(new File("src/resources/pause.png").toURI().toString()));
             
         }
         
         event.setDropCompleted(true);
         event.consume();
         
-    }
-    
-    @FXML
-    private void computerMusic(ActionEvent event) {
-        
-        String thisPath = "C:/Users/Santana/Downloads/kommsussertodd.mp3";
-       
-        musicPlayer.setMusica(new Media(new File(thisPath).toURI().toString()));
-        
-        musicPlayer.trocarMusica();
-        
-    }
-    
-    @FXML
-    private void pausarMusica(ActionEvent event) {
-        
-        musicPlayer.pauseMusica();
-        
-    }
-    
-    @FXML
-    private void comecarMusica(ActionEvent event) {
-        
-        System.out.println("You clicked me!");
-        
-        if(!this.testButton){
-            //musicPlayer.setCycleCount(musicPlayer.player.INDEFINITE);
-
-            musicPlayer.setMusica(new Media(new File("src/newmp3player/song.mp3").toURI().toString()));
-            
-            musicPlayer.trocarMusica();
-            
-            this.testButton=true;
-            
-        }else{
-            
-            musicPlayer.setMusica(new Media(new File("src/newmp3player/song3.mp3").toURI().toString()));
-            
-            musicPlayer.trocarMusica();
-            
-            this.testButton=false;
-            
-        }
-
     }
     
     @FXML
@@ -182,6 +147,58 @@ public class FXMLDocumentController implements Initializable {
         progressBar.progressProperty().bind(musicPlayer.barUpdater);
 
         this.setSongAvatar(new Image(new File("src/newmp3player/avatar.png").toURI().toString()));
+        
+        playPause.setOnMouseClicked((MouseEvent e) -> {
+            
+            if(musicPlayer.getPlayer() == null){
+                return;
+            }
+            
+            if(musicPlayer.isPlaying()) {
+                playPause.setImage(new Image(new File("src/resources/play.png").toURI().toString()));
+                musicPlayer.pauseMusica();
+            }else{
+                playPause.setImage(new Image(new File("src/resources/pause.png").toURI().toString()));
+                musicPlayer.pauseMusica();
+            }
+            
+            
+            
+        });
+        
+        playPause.setOnMouseClicked((MouseEvent e) -> {
+            
+            if(musicPlayer.getPlayer() == null){
+                return;
+            }
+            
+            if(musicPlayer.isPlaying()) {
+                playPause.setImage(new Image(new File("src/resources/play.png").toURI().toString()));
+                musicPlayer.pauseMusica();
+            }else{
+                playPause.setImage(new Image(new File("src/resources/pause.png").toURI().toString()));
+                musicPlayer.pauseMusica();
+            }
+            
+        });
+        
+        repeat.setOnMouseClicked((MouseEvent e) -> {
+            
+            musicPlayer.mudarRepeat();
+            
+            if(musicPlayer.isLoopable()){
+                
+                repeat.setImage(new Image(new File("src/resources/repeat2.png").toURI().toString()));
+                
+            }else{
+                
+                repeat.setImage(new Image(new File("src/resources/repeat.png").toURI().toString()));
+                
+            }
+            
+            
+            
+        });
         
         
     }    

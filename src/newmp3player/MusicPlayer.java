@@ -16,9 +16,8 @@ public class MusicPlayer {
     private Media musica;
     private int volume;
     public DoubleProperty barUpdater = new SimpleDoubleProperty(.0);
-
     private boolean playing = false;
-    private boolean loopable;
+    private boolean loopable = false;
 
     public Media getMusica() {
         return musica;
@@ -81,13 +80,54 @@ public class MusicPlayer {
         
         this.setPlayer(mediaPlayer);
         
-  
-        
         this.playMusica();
         
         this.playing=true;
         
         progressTrigger();
+        
+        mediaPlayer.setOnReady(new Runnable() {
+
+            @Override
+            public void run() {
+                
+                forceRepeat();
+
+            }}
+                
+        );
+        
+    }
+    
+    public void forceRepeat() {
+        
+        if(this.isLoopable()){
+            
+            this.getPlayer().setCycleCount(player.INDEFINITE);
+            
+        }else{
+            
+            this.getPlayer().setCycleCount(1);
+            
+        }
+        
+    }
+    
+    public void mudarRepeat() {
+        
+        if(!this.isLoopable()){
+            
+            this.getPlayer().setCycleCount(player.INDEFINITE);
+            
+            this.setLoopable(true);
+            
+        }else{
+            
+            this.getPlayer().setCycleCount(1);
+            
+            this.setLoopable(false);
+            
+        }
         
     }
     
@@ -100,7 +140,7 @@ public class MusicPlayer {
         
             barUpdater.set(progressPercentage);
             
-            if(progressPercentage>=1){
+            if(progressPercentage>=1 && this.isLoopable()==false){
                 wait.stop();
                 return;
             }
