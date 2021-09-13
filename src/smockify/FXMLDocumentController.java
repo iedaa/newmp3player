@@ -14,26 +14,19 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 /*
 Necessários para iniciar uma música .mp3
 */
 
 import java.net.URL;
-import static java.net.URLDecoder.decode;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.animation.PauseTransition;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -47,10 +40,8 @@ import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.Background;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.util.Duration;
 import javax.imageio.ImageIO;
 import org.farng.mp3.TagException;
 
@@ -223,6 +214,11 @@ public class FXMLDocumentController implements Initializable {
                 
                 musicaNome.setText(mp3file.getId3v2Tag().getTitle());
                 
+                if(mp3file.getId3v2Tag().getAlbumImage() == null){
+                    this.setSongAvatar(new Image(new File("src/smockify/avatar.png").toURI().toString()));
+                    return;
+                }
+                    
                 BufferedImage img = ImageIO.read(new ByteArrayInputStream(mp3file.getId3v2Tag().getAlbumImage()));;
                 
                 Image capturedImg = SwingFXUtils.toFXImage(img, null);
@@ -271,6 +267,11 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     public void setSongAvatar(Image img) {
+        
+        if(img.isError()){
+            this.setSongAvatar(new Image(new File("src/smockify/avatar.png").toURI().toString()));
+            return;
+        }
         
         songCircle.setFill(new ImagePattern(img));
         
