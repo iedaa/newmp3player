@@ -1,4 +1,4 @@
-package newmp3player;
+package smockify;
 
 import java.io.File;
 import javafx.animation.PauseTransition;
@@ -14,10 +14,32 @@ public class MusicPlayer {
     
     private MediaPlayer player;
     private Media musica;
-    private int volume;
-    public DoubleProperty barUpdater = new SimpleDoubleProperty(.0);
+    private DoubleProperty barUpdater = new SimpleDoubleProperty(.0);
     private boolean playing = false;
     private boolean loopable = false;
+    private FXMLDocumentController controlador;
+
+    public DoubleProperty getBarUpdater() {
+        return barUpdater;
+    }
+
+    public void setBarUpdater(DoubleProperty barUpdater) {
+        this.barUpdater = barUpdater;
+    }
+
+    public void setVolume(double volume) {
+        
+        player.setVolume(volume);
+        
+    };
+    
+    public FXMLDocumentController getControlador(){
+        return this.controlador;
+    }
+    
+    public void setControlador(FXMLDocumentController controlador) {
+        this.controlador = controlador;
+    }
 
     public Media getMusica() {
         return musica;
@@ -35,14 +57,6 @@ public class MusicPlayer {
 
     public void setPlayer(MediaPlayer player) {
         this.player = player;
-    }
-
-    public int getVolume() {
-        return volume;
-    }
-
-    public void setVolume(int volume) {
-        this.volume = volume;
     }
 
     public boolean isPlaying() {
@@ -92,6 +106,7 @@ public class MusicPlayer {
             public void run() {
                 
                 forceRepeat();
+                setVolume((getControlador().getSliderVolume().getValue()/100));
 
             }}
                 
@@ -117,7 +132,7 @@ public class MusicPlayer {
         
         if(!this.isLoopable()){
             
-            this.getPlayer().setCycleCount(player.INDEFINITE);
+            this.getPlayer().setCycleCount(this.getPlayer().INDEFINITE);
             
             this.setLoopable(true);
             
@@ -131,6 +146,12 @@ public class MusicPlayer {
         
     }
     
+    public String secondsToMinutes(double seconds){
+        
+        return String.format("%02d:%02d", (int) seconds / 60, (int) seconds % 60);
+        
+    }
+    
     public void progressTrigger(){
         
         PauseTransition wait = new PauseTransition(Duration.seconds(0.05)); //talvez esteja muito low, não sei se trava ou algo do tipo
@@ -138,9 +159,14 @@ public class MusicPlayer {
             
             double progressPercentage = this.getPlayer().getCurrentTime().toSeconds() / this.getPlayer().getTotalDuration().toSeconds();
         
+            controlador.getMusicaTimer().setText(this.secondsToMinutes(this.getPlayer().getCurrentTime().toSeconds())+" / "+this.secondsToMinutes(this.getPlayer().getTotalDuration().toSeconds()));
+            
             barUpdater.set(progressPercentage);
             
             if(progressPercentage>=1 && this.isLoopable()==false){
+                
+                this.getControlador().getPlayPause().setImage(new Image(new File("src/resources/play.png").toURI().toString()));
+                
                 wait.stop();
                 return;
             }
@@ -156,10 +182,10 @@ public class MusicPlayer {
     public void pauseMusica() {
         
         if(this.isPlaying()){
-            this.player.pause();
+            this.getPlayer().pause();
             this.setPlaying(false);
         }else{
-            this.player.play();
+            this.getPlayer().play();
             this.setPlaying(true);
         }
         
