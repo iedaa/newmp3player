@@ -36,7 +36,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ProgressBar>
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="332.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="previousSong" fitHeight="32.0" fitWidth="32.0" layoutX="332.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/skip2.png" />
          </image>
@@ -44,7 +44,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="404.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="nextSong" fitHeight="32.0" fitWidth="32.0" layoutX="404.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/skip.png" />
          </image>
@@ -60,7 +60,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fitHeight="32.0" fitWidth="32.0" layoutX="300.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="shuffler" fitHeight="32.0" fitWidth="32.0" layoutX="300.0" layoutY="388.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resources/shuffle.png" />
          </image>

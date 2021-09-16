@@ -17,6 +17,15 @@ public class MusicPlayer {
     private DoubleProperty barUpdater = new SimpleDoubleProperty(.0);
     private boolean playing = false;
     private boolean loopable = false;
+    private boolean shufflable = false;
+
+    public boolean isShufflable() {
+        return shufflable;
+    }
+
+    public void setShufflable(boolean shufflable) {
+        this.shufflable = shufflable;
+    }
     private FXMLDocumentController controlador;
 
     public DoubleProperty getBarUpdater() {

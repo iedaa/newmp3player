@@ -77,6 +77,15 @@ public class FXMLDocumentController implements Initializable {
     private Slider sliderVolume;
     
     @FXML
+    private ImageView previousSong;
+    
+    @FXML
+    private ImageView shuffler;
+    
+    @FXML
+    private ImageView nextSong;
+    
+    @FXML
     private ListView<String> listView = new ListView<String>();
     
     ArrayList<AcessoRapido> arrayMusica = new ArrayList<AcessoRapido>();
@@ -135,6 +144,22 @@ public class FXMLDocumentController implements Initializable {
 
     public void setRepeat(ImageView repeat) {
         this.repeat = repeat;
+    }
+    
+    public ImageView setNextSong() {
+        return nextSong;
+    }
+
+    public void setNextSong(ImageView nextSong) {
+        this.nextSong = nextSong;
+    }
+    
+    public ImageView getPreviousSong() {
+        return previousSong;
+    }
+
+    public void setPreviousSong(ImageView previousSong) {
+        this.previousSong = previousSong;
     }
 
     public Slider getSliderVolume() {
@@ -385,13 +410,103 @@ public class FXMLDocumentController implements Initializable {
            }
         });
         
+        nextSong.setOnMouseClicked((MouseEvent e) -> {
+            
+          int arrayLength = getArrayMusica().toArray().length - 1;
+           
+           if(getArrayMusica().toArray().length <= 1 || getArrayMusica().get(arrayLength).getUrl().toURI().toString().equals(getMusicPlayer().getMusica().getSource())){
+               //System.out.println("Lista pequena ou já alcançou sua máxima capacidade.");
+               return;
+           }
+           
+           for(int x = 0; x<=arrayLength; x++){
+               
+               /*
+               System.out.println(
+               getMusicPlayer().getMusica().getSource()+
+               " == "+
+               getArrayMusica().get(x).getUrl().toURI().toString()+
+               ": "+getMusicPlayer().getMusica().getSource().equals(getArrayMusica().get(x).getUrl().toURI().toString())        
+               );
+               */
+               
+               if(getMusicPlayer().getMusica().getSource().equals(getArrayMusica().get(x).getUrl().toURI().toString())){
+                   
+                   try {
+                       setMedia2Screen(getArrayMusica().get(x+1).getUrl());
+                   } catch (IOException ex) {
+                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                   } catch (UnsupportedTagException ex) {
+                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                   } catch (InvalidDataException ex) {
+                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+                   
+                   return;
+                   
+               }
+               
+               
+           }
+           
+        });
+        
+        previousSong.setOnMouseClicked((MouseEvent e) -> {
+           
+           
+           if(getArrayMusica().toArray().length <= 1 || getArrayMusica().get(0).getUrl().toURI().toString().equals(getMusicPlayer().getMusica().getSource())){
+               //System.out.println("Lista pequena ou já voltou demais.");
+               return;
+           } 
+           
+           for(int x = 0; x<getArrayMusica().size(); x++){
+               
+               if(getArrayMusica().get(x).getUrl().toURI().toString().equals(getMusicPlayer().getMusica().getSource())){
+                   
+                   try {
+                       setMedia2Screen(getArrayMusica().get(x-1).getUrl());
+                   } catch (IOException ex) {
+                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                   } catch (UnsupportedTagException ex) {
+                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                   } catch (InvalidDataException ex) {
+                       Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+                   
+                   return;
+                   
+               }
+               
+               
+           }
+ 
+        });
+        
+        shuffler.setOnMouseClicked((MouseEvent e) -> { //Ainda não está funcionando totalmente, além disso, teria que ter um esquema de prioridade onde o repeat tem mais prioridade que o shuffle.
+           
+            if(getMusicPlayer().getPlayer() == null){
+                return;
+            }
+            
+            boolean decision = getMusicPlayer().isShufflable() ? false : true;
+            
+            getMusicPlayer().setShufflable( decision );
+            
+            if(getMusicPlayer().isShufflable()){
+                shuffler.setImage(new Image(new File("src/resources/shuffle2.png").toURI().toString()));
+            }else{
+                shuffler.setImage(new Image(new File("src/resources/shuffle.png").toURI().toString()));
+            }
+            
+        });
+        
         repeat.setOnMouseClicked((MouseEvent e) -> {
             
             if(musicPlayer.getPlayer() == null){
                 return;
             }
             
-            musicPlayer.mudarRepeat();
+            musicPlayer.mudarRepeat(); //operador ternario aqui seria uma melhor opção
             
             if(musicPlayer.isLoopable()){
                 
