@@ -415,20 +415,10 @@ public class FXMLDocumentController implements Initializable {
           int arrayLength = getArrayMusica().toArray().length - 1;
            
            if(getArrayMusica().toArray().length <= 1 || getArrayMusica().get(arrayLength).getUrl().toURI().toString().equals(getMusicPlayer().getMusica().getSource())){
-               //System.out.println("Lista pequena ou já alcançou sua máxima capacidade.");
                return;
            }
            
            for(int x = 0; x<=arrayLength; x++){
-               
-               /*
-               System.out.println(
-               getMusicPlayer().getMusica().getSource()+
-               " == "+
-               getArrayMusica().get(x).getUrl().toURI().toString()+
-               ": "+getMusicPlayer().getMusica().getSource().equals(getArrayMusica().get(x).getUrl().toURI().toString())        
-               );
-               */
                
                if(getMusicPlayer().getMusica().getSource().equals(getArrayMusica().get(x).getUrl().toURI().toString())){
                    
@@ -455,7 +445,6 @@ public class FXMLDocumentController implements Initializable {
            
            
            if(getArrayMusica().toArray().length <= 1 || getArrayMusica().get(0).getUrl().toURI().toString().equals(getMusicPlayer().getMusica().getSource())){
-               //System.out.println("Lista pequena ou já voltou demais.");
                return;
            } 
            
@@ -482,7 +471,7 @@ public class FXMLDocumentController implements Initializable {
  
         });
         
-        shuffler.setOnMouseClicked((MouseEvent e) -> { //Ainda não está funcionando totalmente, além disso, teria que ter um esquema de prioridade onde o repeat tem mais prioridade que o shuffle.
+        getShuffler().setOnMouseClicked((MouseEvent e) -> {
            
             if(getMusicPlayer().getPlayer() == null){
                 return;
@@ -493,28 +482,28 @@ public class FXMLDocumentController implements Initializable {
             getMusicPlayer().setShufflable( decision );
             
             if(getMusicPlayer().isShufflable()){
-                shuffler.setImage(new Image(new File("src/resources/shuffle2.png").toURI().toString()));
+                getShuffler().setImage(new Image(new File("src/resources/shuffle2.png").toURI().toString()));
             }else{
-                shuffler.setImage(new Image(new File("src/resources/shuffle.png").toURI().toString()));
+                getShuffler().setImage(new Image(new File("src/resources/shuffle.png").toURI().toString()));
             }
             
         });
         
-        repeat.setOnMouseClicked((MouseEvent e) -> {
+        getRepeat().setOnMouseClicked((MouseEvent e) -> {
             
-            if(musicPlayer.getPlayer() == null){
+            if(getMusicPlayer().getPlayer() == null){
                 return;
             }
             
-            musicPlayer.mudarRepeat(); //operador ternario aqui seria uma melhor opção
+            getMusicPlayer().mudarRepeat(); //operador ternario aqui seria uma melhor opção
             
-            if(musicPlayer.isLoopable()){
+            if(getMusicPlayer().isLoopable()){
                 
-                repeat.setImage(new Image(new File("src/resources/repeat2.png").toURI().toString()));
+                getRepeat().setImage(new Image(new File("src/resources/repeat2.png").toURI().toString()));
                 
             }else{
                 
-                repeat.setImage(new Image(new File("src/resources/repeat.png").toURI().toString()));
+                getRepeat().setImage(new Image(new File("src/resources/repeat.png").toURI().toString()));
                 
             }
             
@@ -524,5 +513,13 @@ public class FXMLDocumentController implements Initializable {
         
         
     }    
+
+    public ImageView getShuffler() {
+        return getShuffler();
+    }
+
+    public void setShuffler(ImageView shuffler) {
+        this.shuffler = shuffler;
+    }
     
 }

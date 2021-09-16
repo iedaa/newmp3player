@@ -1,6 +1,11 @@
 package smockify;
 
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.UnsupportedTagException;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.PauseTransition;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -176,7 +181,44 @@ public class MusicPlayer {
                 
                 this.getControlador().getPlayPause().setImage(new Image(new File("src/resources/play.png").toURI().toString()));
                 
+                if(this.isShufflable()){
+                    
+                    
+                    try {
+                        
+                        
+                        double getSong;
+                        
+                        if(getControlador().getArrayMusica().size() <= 1){
+                            
+                            wait.stop();
+                            
+                            return;
+                            
+                        }
+                        
+                        
+                        
+                        do {
+                            
+                            getSong = Math.floor(Math.random() * getControlador().getArrayMusica().size());
+                            
+                        }while(getControlador().getArrayMusica().get((int)getSong).getUrl().toURI().toString().equals( getMusica().getSource() ));
+
+                        getControlador().setMedia2Screen(getControlador().getArrayMusica().get((int) getSong).getUrl());
+                        
+                    } catch (IOException ex) {
+                        Logger.getLogger(MusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (UnsupportedTagException ex) {
+                        Logger.getLogger(MusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (InvalidDataException ex) {
+                        Logger.getLogger(MusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                }
+                
                 wait.stop();
+                
                 return;
             }
             
