@@ -471,7 +471,7 @@ public class FXMLDocumentController implements Initializable {
  
         });
         
-        getShuffler().setOnMouseClicked((MouseEvent e) -> {
+        shuffler.setOnMouseClicked((MouseEvent e) -> {
            
             if(getMusicPlayer().getPlayer() == null){
                 return;
@@ -489,7 +489,7 @@ public class FXMLDocumentController implements Initializable {
             
         });
         
-        getRepeat().setOnMouseClicked((MouseEvent e) -> {
+        repeat.setOnMouseClicked((MouseEvent e) -> {
             
             if(getMusicPlayer().getPlayer() == null){
                 return;
