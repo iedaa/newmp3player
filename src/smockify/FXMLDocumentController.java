@@ -49,6 +49,7 @@ import org.farng.mp3.TagException;
  *
  * @author Santana
  */
+
 public class FXMLDocumentController implements Initializable {
     
     private boolean testButton=false;
@@ -88,16 +89,16 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private ListView<String> listView = new ListView<String>();
     
-    ArrayList<AcessoRapido> arrayMusica = new ArrayList<AcessoRapido>();
-
+    private ArrayList<AcessoRapido> arrayMusica = new ArrayList<AcessoRapido>();
+    
     public boolean isTestButton() {
         return testButton;
     }
-
+    
     public void setTestButton(boolean testButton) {
         this.testButton = testButton;
     }
-
+    
     public MusicPlayer getMusicPlayer() {
         return musicPlayer;
     }
@@ -192,8 +193,8 @@ public class FXMLDocumentController implements Initializable {
     
     public boolean verifyContains(File URL){
         
-        for(int x=0; x<arrayMusica.size(); x++){
-            if(arrayMusica.get(x).getUrl().equals(URL)){
+        for(int x=0; x<getArrayMusica().size(); x++){
+            if(getArrayMusica().get(x).getUrl().equals(URL)){
                 return true;
             }
         }
@@ -207,20 +208,20 @@ public class FXMLDocumentController implements Initializable {
             
             //replaceAll("\uFFFD", "") serve para remover os caracteres esquisitos que aparecem, que tem alguma relação com UCS-2 e não conseguir interpretar o texto como UTF-8.
                 
-            musicPlayer.setMusica(new Media(file.toURI().toString()));
+            getMusicPlayer().setMusica(new Media(file.toURI().toString()));
             
-            musicPlayer.trocarMusica();
+            getMusicPlayer().trocarMusica();
             
-            playPause.setImage(new Image(new File("src/resources/pause.png").toURI().toString()));
+            getPlayPause().setImage(new Image(new File("src/resources/pause.png").toURI().toString()));
     
             if(!this.verifyContains(file)) {
                 
-                arrayMusica.add(new AcessoRapido(file, file.getName()));
+                getArrayMusica().add(new AcessoRapido(file, file.getName()));
 
                 ArrayList<String> acessoTitles = new ArrayList<String>();
 
-                for(int x=0; x<arrayMusica.size(); x++){
-                    acessoTitles.add(arrayMusica.get(x).getTitle());
+                for(int x=0; x<getArrayMusica().size(); x++){
+                    acessoTitles.add(getArrayMusica().get(x).getTitle());
                 }
 
                 String[] recentSongs = acessoTitles.toArray(new String[0]);
@@ -231,13 +232,13 @@ public class FXMLDocumentController implements Initializable {
             
             if(mp3file.getId3v2Tag().getTitle() == null){
                 
-                musicaNome.setText(file.getName());
+                getMusicaNome().setText(file.getName());
                 
                 this.setSongAvatar(new Image(new File("src/smockify/avatar.png").toURI().toString()));
                 
             }else{
                 
-                musicaNome.setText(mp3file.getId3v2Tag().getTitle());
+                getMusicaNome().setText(mp3file.getId3v2Tag().getTitle());
                 
                 if(mp3file.getId3v2Tag().getAlbumImage() == null){
                     this.setSongAvatar(new Image(new File("src/smockify/avatar.png").toURI().toString()));
@@ -251,13 +252,6 @@ public class FXMLDocumentController implements Initializable {
                 this.setSongAvatar(capturedImg);
                 
             }
-        
-    }
-    
-    @FXML
-    private void dragDetectSong(MouseEvent event) {
-        
-        System.out.println("Drag detected...");
         
     }
     
@@ -298,19 +292,19 @@ public class FXMLDocumentController implements Initializable {
             return;
         }
         
-        songCircle.setFill(new ImagePattern(img));
+        getSongCircle().setFill(new ImagePattern(img));
         
     }
     
     public void getSongURL(String title) throws IOException, UnsupportedTagException, InvalidDataException{
         
-        for(int x=0; x<arrayMusica.size(); x++){
+        for(int x=0; x<getArrayMusica().size(); x++){
             
-            if(arrayMusica.get(x).getTitle().equals(title)){
+            if(getArrayMusica().get(x).getTitle().equals(title)){
                 
-                setMedia2Screen(arrayMusica.get(x).getUrl());
+                setMedia2Screen(getArrayMusica().get(x).getUrl());
                 
-                playPause.setImage(new Image(new File("src/resources/pause.png").toURI().toString()));
+                getPlayPause().setImage(new Image(new File("src/resources/pause.png").toURI().toString()));
             }
         }
     };
@@ -321,7 +315,7 @@ public class FXMLDocumentController implements Initializable {
         
         items = FXCollections.observableArrayList (songArray);
         
-        this.listView.setItems(items);
+        this.getListView().setItems(items);
         
     }
     
@@ -338,51 +332,51 @@ public class FXMLDocumentController implements Initializable {
         
         //this.setSongList(checking);
         
-        sliderVolume.setOnMouseReleased(e -> {
+        getSliderVolume().setOnMouseReleased(e -> {
             
-            if(musicPlayer.getPlayer() == null){
+            if(getMusicPlayer().getPlayer() == null){
                 return;
             }
             
-            musicPlayer.setVolume((sliderVolume.getValue()/100));
+            getMusicPlayer().setVolume((getSliderVolume().getValue()/100));
             
-            System.out.println(musicPlayer.getPlayer().getVolume());
+            System.out.println(getMusicPlayer().getPlayer().getVolume());
             
         });
         
         playPause.setOnMouseClicked((MouseEvent e) -> {
             
-            if(musicPlayer.getPlayer() == null){
+            if(getMusicPlayer().getPlayer() == null){
                 return;
             }
             
-            if(musicPlayer.isPlaying()) {
-                playPause.setImage(new Image(new File("src/resources/play.png").toURI().toString()));
-                musicPlayer.pauseMusica();
+            if(getMusicPlayer().isPlaying()) {
+                getPlayPause().setImage(new Image(new File("src/resources/play.png").toURI().toString()));
+                getMusicPlayer().pauseMusica();
             }else{
-                playPause.setImage(new Image(new File("src/resources/pause.png").toURI().toString()));
-                musicPlayer.pauseMusica();
+                getPlayPause().setImage(new Image(new File("src/resources/pause.png").toURI().toString()));
+                getMusicPlayer().pauseMusica();
             }
             
         });
         
         playPause.setOnMouseClicked((MouseEvent e) -> {
             
-            if(musicPlayer.getPlayer() == null){
+            if(getMusicPlayer().getPlayer() == null){
                 return;
             }
             
-            if(musicPlayer.getPlayer().getCurrentTime().toSeconds() / musicPlayer.getPlayer().getTotalDuration().toSeconds() == 1){
-                musicPlayer.trocarMusica();
-                musicPlayer.pauseMusica();
+            if(getMusicPlayer().getPlayer().getCurrentTime().toSeconds() / getMusicPlayer().getPlayer().getTotalDuration().toSeconds() == 1){
+                getMusicPlayer().trocarMusica();
+                getMusicPlayer().pauseMusica();
             }
             
-            if(musicPlayer.isPlaying()) {
-                playPause.setImage(new Image(new File("src/resources/play.png").toURI().toString()));
-                musicPlayer.pauseMusica();
+            if(getMusicPlayer().isPlaying()) {
+                getPlayPause().setImage(new Image(new File("src/resources/play.png").toURI().toString()));
+                getMusicPlayer().pauseMusica();
             }else{
-                playPause.setImage(new Image(new File("src/resources/pause.png").toURI().toString()));
-                musicPlayer.pauseMusica();
+                getPlayPause().setImage(new Image(new File("src/resources/pause.png").toURI().toString()));
+                getMusicPlayer().pauseMusica();
             }
             
         });
@@ -391,13 +385,17 @@ public class FXMLDocumentController implements Initializable {
            @Override
            public void handle(MouseEvent event) {
                
+               if(getMusicPlayer().getPlayer() == null){
+                    return;
+               }
+               
                try {
                    
-                   if(listView.getSelectionModel().getSelectedItem() == null){
+                   if(getListView().getSelectionModel().getSelectedItem() == null){
                        return;
                    }
                    
-                   getSongURL(listView.getSelectionModel().getSelectedItem());
+                   getSongURL(getListView().getSelectionModel().getSelectedItem());
                    
                } catch (IOException ex) {
                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -515,7 +513,7 @@ public class FXMLDocumentController implements Initializable {
     }    
 
     public ImageView getShuffler() {
-        return getShuffler();
+        return shuffler;
     }
 
     public void setShuffler(ImageView shuffler) {
