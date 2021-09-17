@@ -173,13 +173,17 @@ public class MusicPlayer {
             
             double progressPercentage = this.getPlayer().getCurrentTime().toSeconds() / this.getPlayer().getTotalDuration().toSeconds();
         
-            controlador.getMusicaTimer().setText(this.secondsToMinutes(this.getPlayer().getCurrentTime().toSeconds())+" / "+this.secondsToMinutes(this.getPlayer().getTotalDuration().toSeconds()));
+            getControlador().getMusicaTimer().setText(this.secondsToMinutes(this.getPlayer().getCurrentTime().toSeconds())+" / "+this.secondsToMinutes(this.getPlayer().getTotalDuration().toSeconds()));
             
-            barUpdater.set(progressPercentage);
+            getBarUpdater().set(progressPercentage);
             
             if(progressPercentage>=1 && this.isLoopable()==false){
                 
-                this.getControlador().getPlayPause().setImage(new Image(new File("src/resources/play.png").toURI().toString()));
+                try {
+                    this.getControlador().getPlayPause().setImage(getControlador().createImage("/resources/play.png"));
+                } catch (IOException ex) {
+                    Logger.getLogger(MusicPlayer.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
                 if(this.isShufflable()){
                     

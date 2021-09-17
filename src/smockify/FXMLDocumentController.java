@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import javafx.scene.media.Media;
 
 /*
@@ -212,8 +213,8 @@ public class FXMLDocumentController implements Initializable {
             
             getMusicPlayer().trocarMusica();
             
-            getPlayPause().setImage(new Image(new File("src/resources/pause.png").toURI().toString()));
-    
+            getPlayPause().setImage(createImage("/resources/pause.png"));
+            
             if(!this.verifyContains(file)) {
                 
                 getArrayMusica().add(new AcessoRapido(file, file.getName()));
@@ -234,14 +235,14 @@ public class FXMLDocumentController implements Initializable {
                 
                 getMusicaNome().setText(file.getName());
                 
-                this.setSongAvatar(new Image(new File("src/smockify/avatar.png").toURI().toString()));
+                this.setSongAvatar();
                 
             }else{
                 
                 getMusicaNome().setText(mp3file.getId3v2Tag().getTitle());
                 
                 if(mp3file.getId3v2Tag().getAlbumImage() == null){
-                    this.setSongAvatar(new Image(new File("src/smockify/avatar.png").toURI().toString()));
+                    this.setSongAvatar();
                     return;
                 }
                     
@@ -284,11 +285,36 @@ public class FXMLDocumentController implements Initializable {
         
     }
     
+    public Image createImage(String address) throws IOException{
+        
+        URL teste = getClass().getResource(address);
+
+        BufferedImage image = ImageIO.read(teste);
+            
+        Image newImage = SwingFXUtils.toFXImage(image, null);
+        
+        return newImage;
+        
+    }
+    
     @FXML
-    public void setSongAvatar(Image img) {
+    public void setSongAvatar() throws IOException {
+        
+        getSongCircle().setFill(new ImagePattern(createImage("avatar.png")));
+            
+        return;
+        
+    }
+    
+    @FXML
+    public void setSongAvatar(Image img) throws IOException {
         
         if(img.isError()){
-            this.setSongAvatar(new Image(new File("src/smockify/avatar.png").toURI().toString()));
+
+            //Image defaultImg = new Image(new File("./avatar.png").toURI().toString());
+            
+            getSongCircle().setFill(new ImagePattern(createImage("avatar.png")));
+            
             return;
         }
         
@@ -304,7 +330,6 @@ public class FXMLDocumentController implements Initializable {
                 
                 setMedia2Screen(getArrayMusica().get(x).getUrl());
                 
-                getPlayPause().setImage(new Image(new File("src/resources/pause.png").toURI().toString()));
             }
         }
     };
@@ -326,7 +351,11 @@ public class FXMLDocumentController implements Initializable {
         
         this.getProgressBar().progressProperty().bind(this.getMusicPlayer().getBarUpdater());
 
-        this.setSongAvatar(new Image(new File("src/smockify/avatar.png").toURI().toString()));
+        try {
+            this.setSongAvatar();
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         //String checking[] = {"a"};
         
@@ -351,10 +380,19 @@ public class FXMLDocumentController implements Initializable {
             }
             
             if(getMusicPlayer().isPlaying()) {
-                getPlayPause().setImage(new Image(new File("src/resources/play.png").toURI().toString()));
+                
+                try {
+                    getPlayPause().setImage(createImage("/resources/play.png"));
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 getMusicPlayer().pauseMusica();
             }else{
-                getPlayPause().setImage(new Image(new File("src/resources/pause.png").toURI().toString()));
+                try {
+                    getPlayPause().setImage(createImage("/resources/pause.png"));
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 getMusicPlayer().pauseMusica();
             }
             
@@ -372,10 +410,18 @@ public class FXMLDocumentController implements Initializable {
             }
             
             if(getMusicPlayer().isPlaying()) {
-                getPlayPause().setImage(new Image(new File("src/resources/play.png").toURI().toString()));
+                try {
+                    getPlayPause().setImage(createImage("/resources/play.png"));
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 getMusicPlayer().pauseMusica();
             }else{
-                getPlayPause().setImage(new Image(new File("src/resources/pause.png").toURI().toString()));
+                try {
+                    getPlayPause().setImage(createImage("/resources/pause.png"));
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 getMusicPlayer().pauseMusica();
             }
             
@@ -480,9 +526,17 @@ public class FXMLDocumentController implements Initializable {
             getMusicPlayer().setShufflable( decision );
             
             if(getMusicPlayer().isShufflable()){
-                getShuffler().setImage(new Image(new File("src/resources/shuffle2.png").toURI().toString()));
+                try {
+                    getShuffler().setImage(createImage("/resources/shuffle2.png"));
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }else{
-                getShuffler().setImage(new Image(new File("src/resources/shuffle.png").toURI().toString()));
+                try {
+                    getShuffler().setImage(createImage("/resources/shuffle.png"));
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
             
         });
@@ -497,11 +551,19 @@ public class FXMLDocumentController implements Initializable {
             
             if(getMusicPlayer().isLoopable()){
                 
-                getRepeat().setImage(new Image(new File("src/resources/repeat2.png").toURI().toString()));
+                try {
+                    getRepeat().setImage(createImage("/resources/repeat2.png"));
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             }else{
                 
-                getRepeat().setImage(new Image(new File("src/resources/repeat.png").toURI().toString()));
+                try {
+                    getRepeat().setImage(createImage("/resources/repeat.png"));
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             }
             

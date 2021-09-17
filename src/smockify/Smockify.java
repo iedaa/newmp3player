@@ -15,6 +15,7 @@ import javafx.stage.Stage;
  *
  * @author Santana
  */
+
 public class Smockify extends Application {
     
     public static void main(String[] args) {
@@ -23,6 +24,7 @@ public class Smockify extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         
         Scene scene = new Scene(root);
