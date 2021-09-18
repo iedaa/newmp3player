@@ -1,0 +1,5 @@
+.root { -fx-focus-color: transparent; }
+
+.label {
+    -fx-background-color: #1db954;
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+
+<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="428.0" fitWidth="630.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="63.0" layoutY="47.0" prefHeight="428.0" prefWidth="630.0" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <textFill>
+            <LinearGradient endX="1.0" endY="0.02857142857142858" startX="1.0" startY="0.8">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color green="1.0" blue="0.75" opacity="0.8069565296173096" />
+                     </color>
+                  </Stop>
+                  <Stop offset="0.32815894458269124">
+                     <color>
+                        <Color green="1.0" blue="0.75" opacity="0.8069565296173096" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color green="1.0" blue="0.7725631594657898" opacity="0.019999999552965164" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill></Label>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="215.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/splash.gif" />
+         </image>
+      </ImageView>
+   </children>
+   <stylesheets>
+      <URL value="@splash.css" />
+   </stylesheets>
+</AnchorPane>

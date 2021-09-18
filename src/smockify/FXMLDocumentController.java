@@ -350,7 +350,7 @@ public class FXMLDocumentController implements Initializable {
         this.getMusicPlayer().setControlador(this);
         
         this.getProgressBar().progressProperty().bind(this.getMusicPlayer().getBarUpdater());
-
+        
         try {
             this.setSongAvatar();
         } catch (IOException ex) {
