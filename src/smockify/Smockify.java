@@ -35,7 +35,7 @@ public class Smockify extends Application {
         stage.setScene(scene);
         stage.show();
         
-        stage.centerOnScreen();
+        //stage.centerOnScreen();
         
         stage.setResizable(false);
         
